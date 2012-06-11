@@ -1,0 +1,100 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{85531606-3070-482F-8751-367DF15C8E32}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>NeosIT.DB_Migrator</RootNamespace>
+    <AssemblyName>NeosIT.DB-Migrator</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="CommandLine, Version=1.9.2.4, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Libs\CommandLine.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DBMigration\Options\AbstractOptions.cs" />
+    <Compile Include="DBMigration\Guard.cs" />
+    <Compile Include="DBMigration\Migrator.cs" />
+    <Compile Include="DBMigration\Options\Factory.cs" />
+    <Compile Include="DBMigration\Parsers\Factory.cs" />
+    <Compile Include="DBMigration\SqlDirInfo.cs" />
+    <Compile Include="DBMigration\SqlFileInfo.cs" />
+    <Compile Include="DBMigration\SqlStacktrace.cs" />
+    <Compile Include="DBMigration\Strategy\Factory.cs" />
+    <Compile Include="DBMigration\Strategy\Flat.cs" />
+    <Compile Include="DBMigration\Strategy\Hierarchial.cs" />
+    <Compile Include="DBMigration\Strategy\IStrategy.cs" />
+    <Compile Include="DBMigration\Parsers\AbstractParser.cs" />
+    <Compile Include="DBMigration\Target\Applier.cs" />
+    <Compile Include="DBMigration\Target\Factory.cs" />
+    <Compile Include="DBMigration\Target\IDbInterface.cs" />
+    <Compile Include="DBMigration\Target\IExecutor.cs" />
+    <Compile Include="DBMigration\Target\MSSQL\Applier.cs" />
+    <Compile Include="DBMigration\Target\MSSQL\DbInterface.cs" />
+    <Compile Include="DBMigration\Target\MSSQL\Executor.cs" />
+    <Compile Include="DBMigration\Options\MSSQL\Options.cs" />
+    <Compile Include="DBMigration\Parsers\MSSQL\Parser.cs" />
+    <Compile Include="DBMigration\Target\MySQL\Applier.cs" />
+    <Compile Include="DBMigration\Target\MySQL\DbInterface.cs" />
+    <Compile Include="DBMigration\Target\MySQL\Executor.cs" />
+    <Compile Include="DBMigration\Options\MySQL\Options.cs" />
+    <Compile Include="DBMigration\Parsers\MySQL\Parser.cs" />
+    <Compile Include="DBMigration\Target\PostgreSQL\Applier.cs" />
+    <Compile Include="DBMigration\Target\PostgreSQL\DbInterface.cs" />
+    <Compile Include="DBMigration\Target\PostgreSQL\Executor.cs" />
+    <Compile Include="DBMigration\Options\PostgreSQL\Options.cs" />
+    <Compile Include="DBMigration\Parsers\PostgreSQL\Parser.cs" />
+    <Compile Include="DBMigration\Version.cs" />
+    <Compile Include="Extensions.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Libs\CommandLine.dll" />
+    <Content Include="Libs\CommandLine.XML" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
