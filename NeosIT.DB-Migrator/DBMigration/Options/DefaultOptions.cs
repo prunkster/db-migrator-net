@@ -4,7 +4,7 @@ using CommandLine.Text;
 
 namespace NeosIT.DB_Migrator.DBMigration.Options
 {
-    public class AbstractOptions
+    public class DefaultOptions
     {
         [Option("u", "username", HelpText = "Database username")]
         public virtual string Username { get; set; }
@@ -30,11 +30,11 @@ namespace NeosIT.DB_Migrator.DBMigration.Options
         [Option("s", "strategy", HelpText = "can be \"flat\" or \"hierarchial\". flat means, that all scripts must be available inside this directory in form of yyyymmdd[-|_]<migration-number>-<name>.suffix. \"hierarchial\" means a directory structure in form of <major>\\<minor>\\<migration-number>[-|_]<name>.suffix")]
         public virtual string Strategy { get; set; }
 
-        [Option("i", "ini", HelpText = "An .ini file from which to read all relevant settings")]
-        public virtual string IniFile { get; set; }
+//        [Option("i", "ini", HelpText = "An .ini file from which to read all relevant settings")]
+//        public virtual string IniFile { get; set; } 
 
-        [Option("x", "section", HelpText = "Name of the section in which to look for")]
-        public virtual string IniSection { get; set; }
+//        [Option("x", "section", HelpText = "Name of the section in which to look for")]
+//        public virtual string IniSection { get; set; }
 
         [Option("t", "target", HelpText = "Target SQL system (can be MSSQL, MySQL or PostgreSQL", Required = true)]
         public string Target { get; set; }
@@ -47,13 +47,14 @@ namespace NeosIT.DB_Migrator.DBMigration.Options
         {
             var help = new HelpText
             {
-                Heading = new HeadingInfo("<>", "<>"),
-                Copyright = new CopyrightInfo("<>", 2012),
+                Heading = new HeadingInfo("db-migrator.NET", "Database migration tool for .NET"),
                 AdditionalNewLineAfterOption = true,
                 AddDashesToOption = true,
             };
-            help.AddPreOptionsLine("<>");
-            help.AddPreOptionsLine("Usage: app -pSomeone");
+            help.AddPreOptionsLine("");
+            help.AddPreOptionsLine("See http://github.com/prunkstar/db-migrator-net or http://github.com/schakko/db-migrator");
+            help.AddPreOptionsLine("");
+            help.AddPreOptionsLine("Usage: db-migrator.exe --target=[mssql,mysql,postgresql] ...");
             help.AddOptions(this);
             return help;
         }

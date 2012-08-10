@@ -2,7 +2,7 @@
 
 namespace NeosIT.DB_Migrator.DBMigration.Options.MySQL
 {
-    public class Options : AbstractOptions
+    public class Options : DefaultOptions
     {
         [Option("u", "username", HelpText = "A valid MySQL username (required)", Required = true)]
         public override string Username { get; set; }

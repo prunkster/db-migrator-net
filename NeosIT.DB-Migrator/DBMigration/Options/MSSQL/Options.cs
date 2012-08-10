@@ -2,7 +2,7 @@
 
 namespace NeosIT.DB_Migrator.DBMigration.Options.MSSQL
 {
-    public class Options : AbstractOptions
+    public class Options : DefaultOptions
     {
         [Option("u", "username", HelpText = "A valid username for Microsoft SQL server. If none is set, a trusted connection (osql parameter -E) is used. If you specify a username, you need to add a password!")]
         public override string Username { get; set; }
