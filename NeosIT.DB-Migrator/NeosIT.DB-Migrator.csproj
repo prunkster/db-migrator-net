@@ -52,6 +52,7 @@
     <Compile Include="DBMigration\Migrator.cs" />
     <Compile Include="DBMigration\Options\Factory.cs" />
     <Compile Include="DBMigration\Parsers\Factory.cs" />
+    <Compile Include="DBMigration\Parsers\MSSQL\ConnectionStringExtractor.cs" />
     <Compile Include="DBMigration\SqlDirInfo.cs" />
     <Compile Include="DBMigration\SqlFileInfo.cs" />
     <Compile Include="DBMigration\SqlStacktrace.cs" />

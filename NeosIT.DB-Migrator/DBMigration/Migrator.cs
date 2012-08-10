@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Data.SqlClient;
 using System.Text.RegularExpressions;
 using NeosIT.DB_Migrator.DBMigration.Strategy;
 using NeosIT.DB_Migrator.DBMigration.Target;

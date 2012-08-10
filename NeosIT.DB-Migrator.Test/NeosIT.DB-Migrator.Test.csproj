@@ -48,6 +48,7 @@
     <Compile Include="DBMigration\GuardTest.cs" />
     <Compile Include="DBMigration\MigratorTest.cs" />
     <Compile Include="DBMigration\Strategy\FlatTest.cs" />
+    <Compile Include="DBMigration\Target\MSSQL\ConnectionStringExtractorTest.cs" />
     <Compile Include="DBMigration\Target\MSSQL\ExecutorTest.cs" />
     <Compile Include="DBMigration\Target\MSSQL\ParserTest.cs" />
     <Compile Include="DBMigration\Target\MySQL\ExecutorTest.cs" />
@@ -79,6 +80,18 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Fixtures\MergeDirectories\Unittest\20120426-200_new_unittest_data.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Fixtures\MSSQL\ConfigWithIntegratedSecurity.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Fixtures\MSSQL\ConfigWithUnityInjection.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Fixtures\MSSQL\ConfigWithUnityInjectionAndNamespaces.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Fixtures\MSSQL\ConfigWithUsernamePassword.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Fixtures\MySQL\Flat\20000101_001.sql">
