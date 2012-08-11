@@ -54,7 +54,12 @@ namespace NeosIT.DB_Migrator.DBMigration.Options
             help.AddPreOptionsLine("");
             help.AddPreOptionsLine("See http://github.com/prunkstar/db-migrator-net or http://github.com/schakko/db-migrator");
             help.AddPreOptionsLine("");
-            help.AddPreOptionsLine("Usage: db-migrator.exe --target=[mssql,mysql,postgresql] ...");
+            help.AddPreOptionsLine("Usage: db-migrator.exe --target=[mssql,mysql,postgresql] <options> <migration_definition1>[;<migration_definition2>[;...]]");
+            help.AddPreOptionsLine("");
+            help.AddPreOptionsLine("The <migration_definition> must have the format:");
+            help.AddPreOptionsLine("  path_to_migrations[,<type>[,<append>]]");
+            help.AddPreOptionsLine("    <type> can be 'all' or 'latest'. 'all' means that every migration in this directory is applied, 'latest' is only the latest file (determined by filename)");
+            help.AddPreOptionsLine("    <append> must be 'true' or 'false'. 'true' means that the migration table will be automatically updated. This is the default. If you choose 'false' your migration script must include an INSERT-statement for the migration table.");
             help.AddOptions(this);
             return help;
         }

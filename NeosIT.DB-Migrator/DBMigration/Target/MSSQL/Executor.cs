@@ -107,7 +107,9 @@ namespace NeosIT.DB_Migrator.DBMigration.Target.MSSQL
         public IList<string> BuildExecCommandDefault(bool verbose = false)
         {
             IList<string> r = new List<string>();
-            //r.Add(Command);
+
+            // parameter -b is needed for retrieving the exit code. Otherwise osql returns always 0
+            r.Add("-b");
 
             if (!string.IsNullOrWhiteSpace(Host))
             {

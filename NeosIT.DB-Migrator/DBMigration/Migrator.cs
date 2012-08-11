@@ -40,6 +40,8 @@ namespace NeosIT.DB_Migrator.DBMigration
 
         public void Run()
         {
+            Console.WriteLine("[migration] working dir: {0}", Environment.CurrentDirectory);
+
             IList<string> dirs = _directories.Split(new[] {_separatorPath,}, StringSplitOptions.None);
             Version version = DbInterface.FindLatestMigration();
             Version useVersion = version;
@@ -100,6 +102,7 @@ namespace NeosIT.DB_Migrator.DBMigration
 
                 Console.WriteLine("[error] SQL-script has not been deleted for debugging purposes ({0})",
                                   Applier.Filename);
+                Environment.ExitCode = 1;
             }
         }
 
