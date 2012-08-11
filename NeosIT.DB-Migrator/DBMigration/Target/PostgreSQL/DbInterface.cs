@@ -10,6 +10,7 @@ namespace NeosIT.DB_Migrator.DBMigration.Target.PostgreSQL
 
     public class DbInterface : IDbInterface
     {
+        private Log log = new Log();
         private const string SqlMajorCol = "major";
         private const string SqlMinorCol = "minor";
 
@@ -54,7 +55,7 @@ namespace NeosIT.DB_Migrator.DBMigration.Target.PostgreSQL
             }
             catch (Exception e)
             {
-                Console.WriteLine("[error] could not retrieve latest revision from database: {0}", e.Message);
+                log.Error(String.Format("Could not retrieve latest revision from database: {0}", e.Message));
 
                 if (e is FilterException)
                 {
@@ -63,12 +64,12 @@ namespace NeosIT.DB_Migrator.DBMigration.Target.PostgreSQL
 
                 if (Regex.Match(e.Message.Split(new[] {'\n'})[0], "(.*)relation(.*)does not exist").Success)
                 {
-                    Console.WriteLine("[create] migrations table does not exist... creating");
+                    log.Warn("Migrations table does not exist... creating");
 
                     try
                     {
                         Executor.ExecCommand(SqlCreateMigration);
-                        Console.WriteLine("[create] migrations table successfully created");
+                        log.Success("migrations table successfully created :-)");
                     }
                     catch (Exception eCreate)
                     {

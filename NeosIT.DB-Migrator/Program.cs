@@ -10,6 +10,8 @@ namespace NeosIT.DB_Migrator
     {
         static void Main(string[] args)
         {
+            Log log = new Log();
+
             Migrator migrator = null;
             AbstractParser parser = null;
 
@@ -20,8 +22,8 @@ namespace NeosIT.DB_Migrator
             catch (Exception ex)
             {
                 Console.Write(new DefaultOptions().Help());
-                Console.WriteLine("Could not continue: " + ex.Message);
-                Environment.Exit(1);
+                log.Error("Could not continue: " + ex.Message);
+                Exit(1);
             }
 
             try
@@ -31,14 +33,23 @@ namespace NeosIT.DB_Migrator
             catch (Exception ex)
             {
                 Console.Write(parser.CurrentOptions.Help());
-                Console.WriteLine("Error: " + ex.Message);
-                Environment.Exit(1);
+                log.Error("Error: " + ex.Message);
+                Exit(1);
             }
 
             if (migrator != null)
             {
                 migrator.Run();
             }
+
+            Exit(Environment.ExitCode);
+        }
+
+        private static void Exit(int code)
+        {
+            Console.ResetColor();
+            Console.ForegroundColor = ConsoleColor.Gray;
+            Environment.Exit(code);
         }
     }
 }

@@ -10,6 +10,7 @@ namespace NeosIT.DB_Migrator.DBMigration.Target.MSSQL
 
     public class DbInterface : IDbInterface
     {
+        private Log log = new Log();
         private const string SqlMajorCol = "major";
         private const string SqlMinorCol = "minor";
 
@@ -55,19 +56,19 @@ namespace NeosIT.DB_Migrator.DBMigration.Target.MSSQL
             }
             catch (Exception e)
             {
-                Console.WriteLine("[error] could not retrieve latest revision from database: {0}", e.Message);
+                log.Error(String.Format("could not retrieve latest revision from database: {0}", e.Message));
 
                 if (e is FilterException)
                 {
                     throw new Exception("Could not filter output");
                 }
 
-                Console.WriteLine("[create] trying to create migration table ...");
+                log.Warn("Creatíng migrations table ...");
 
                 try
                 {
                     Executor.ExecCommand(SqlCreateMigration);
-                    Console.WriteLine("[create] migrations table successfully created");
+                    log.Success("Migrations table successfully created :-)");
 
                     return FindLatestMigration();
                 }
