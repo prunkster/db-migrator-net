@@ -47,6 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DBMigration\Log.cs" />
     <Compile Include="DBMigration\Options\DefaultOptions.cs" />
     <Compile Include="DBMigration\Guard.cs" />
     <Compile Include="DBMigration\Migrator.cs" />

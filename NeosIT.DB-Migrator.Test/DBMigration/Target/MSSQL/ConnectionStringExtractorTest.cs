@@ -42,5 +42,25 @@ namespace NeosIT.DB_Migrator.Test.DBMigration.Target.MSSQL
             Assert.AreEqual("", _executor.Username);
             Assert.AreEqual("", _executor.Password);
         }
+
+        [Test]
+        public void FindConnectionStringByNameInConfigurationWithComments()
+        {
+            string fixture = new DirectoryInfo("./Fixtures/MSSQL/ConfigWithComments.xml").FullName;
+
+            XPathDocument doc = new XPathDocument(fixture);
+            var nav = doc.CreateNavigator();
+            ConnectionStringExtractor cse = new ConnectionStringExtractor(nav, new XmlNamespaceManager(nav.NameTable));
+            _executor.Username = "bla";
+            _executor.Password = "blub";
+            _executor.Database = "blip";
+            _executor.Host = "blop";
+
+            cse.LoadConnectionStringInto(@"/configuration/connectionStrings/add[@name='DatabaseConnection']/@connectionString", _executor);
+            Assert.AreEqual("fixture6Host", _executor.Host);
+            Assert.AreEqual("fixture6Db", _executor.Database);
+            Assert.AreEqual("fixture6User", _executor.Username);
+            Assert.AreEqual("fixture6Password", _executor.Password);
+        }
     }
 }

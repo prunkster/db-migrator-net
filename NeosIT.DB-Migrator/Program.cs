@@ -21,7 +21,7 @@ namespace NeosIT.DB_Migrator
             }
             catch (Exception ex)
             {
-                Console.Write(new DefaultOptions().Help());
+                Console.Write(GetHelp(parser));
                 log.Error("Could not continue: " + ex.Message);
                 Exit(1);
             }
@@ -32,7 +32,7 @@ namespace NeosIT.DB_Migrator
             }
             catch (Exception ex)
             {
-                Console.Write(parser.CurrentOptions.Help());
+                Console.Write(GetHelp(parser));
                 log.Error("Error: " + ex.Message);
                 Exit(1);
             }
@@ -43,6 +43,15 @@ namespace NeosIT.DB_Migrator
             }
 
             Exit(Environment.ExitCode);
+        }
+
+        private static string GetHelp(AbstractParser parser)
+        {
+            if (parser != null && parser.CurrentOptions != null) {
+                return parser.CurrentOptions.Help();
+            }
+
+            return new DefaultOptions().Help();
         }
 
         private static void Exit(int code)

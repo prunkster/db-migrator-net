@@ -82,6 +82,9 @@
     <Content Include="Fixtures\MergeDirectories\Unittest\20120426-200_new_unittest_data.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Fixtures\MSSQL\ConfigWithComments.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Fixtures\MSSQL\ConfigWithIntegratedSecurity.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

@@ -23,8 +23,6 @@ namespace NeosIT.DB_Migrator.DBMigration.Parsers
             return migrator;
         }
 
-        
-
         public virtual Migrator InitMigrator(Migrator migrator)
         {
             throw new Exception("InitMigrator() must be overwritten!");

@@ -26,7 +26,19 @@ namespace NeosIT.DB_Migrator.DBMigration.Parsers.MSSQL
             iterator.MoveNext();
             string connectionString = iterator.Current.Value;
 
-            return new SqlConnectionStringBuilder(connectionString);
+            if (string.IsNullOrEmpty(connectionString))
+            {
+                throw new Exception(String.Format("Could not get any connection string at XPath expression {0}. You must use single-quotes in your XPath arguments.", xpathExpression));
+            }
+
+            try
+            {
+                return new SqlConnectionStringBuilder(connectionString);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(String.Format("Failed to interpret connectionString '{0}'. This is not a valid connectionString format: {1}", connectionString, ex.Message));
+            }
         }
 
         public void LoadConnectionStringInto(string xpathExpression, IExecutor executor)
