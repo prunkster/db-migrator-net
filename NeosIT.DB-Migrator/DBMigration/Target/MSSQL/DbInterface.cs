@@ -41,12 +41,12 @@ namespace NeosIT.DB_Migrator.DBMigration.Target.MSSQL
                         throw new FilterException();
                     }
 
-                    MatchCollection matches = Regex.Matches(lines[2], @"\s*(\d*)\s(\d+)");
+                    Match match = Regex.Match(lines[2], @"\s+(\d*)\s+(\d+)\s+");
 
-                    if (2 == matches.Count)
+                    if (match.Success)
                     {
-                        major = matches[0].Value.Trim();
-                        minor = matches[1].Value.Trim();
+                        major = match.Groups[1].ToString().Trim();
+                        minor = match.Groups[2].ToString().Trim();
                     }
                 }
 
