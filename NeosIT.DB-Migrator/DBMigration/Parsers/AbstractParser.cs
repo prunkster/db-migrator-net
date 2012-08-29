@@ -6,7 +6,7 @@ namespace NeosIT.DB_Migrator.DBMigration.Parsers
 {
     public abstract class AbstractParser
     {
-        public AbstractOptions CurrentOptions { get; protected set; }
+        public DefaultOptions CurrentOptions { get; protected set; }
 
         public Migrator Parse(string[] args, Migrator migrator)
         {
@@ -22,8 +22,6 @@ namespace NeosIT.DB_Migrator.DBMigration.Parsers
 
             return migrator;
         }
-
-        
 
         public virtual Migrator InitMigrator(Migrator migrator)
         {

@@ -7,6 +7,7 @@ namespace NeosIT.DB_Migrator.DBMigration.Target.MySQL
 {
     public class Executor : IExecutor
     {
+        private Log log = new Log();
         private string _args = "";
         private string _command = "mysql";
         private string _database = "";
@@ -54,7 +55,7 @@ namespace NeosIT.DB_Migrator.DBMigration.Target.MySQL
 
         public string Exec(string cmdArgs)
         {
-            Console.WriteLine("[command] executing {0} {1}", _command, cmdArgs);
+            log.Debug(String.Format("executing {0} {1}", _command, cmdArgs), "exec");
 
             var proc = new Process();
             proc.StartInfo = new ProcessStartInfo(Command);

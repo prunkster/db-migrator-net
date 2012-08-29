@@ -7,6 +7,7 @@ namespace NeosIT.DB_Migrator.DBMigration.Strategy
 {
     public class Flat : IStrategy
     {
+        private Log log = new Log();
         #region IStrategy Members
 
         public Dictionary<Version, SqlFileInfo> FindUnappliedMigrationsSince(Version version, SqlDirInfo dir,
@@ -31,7 +32,7 @@ namespace NeosIT.DB_Migrator.DBMigration.Strategy
                     if (guard.IsMigrationAllowed(file, version, fileVersion))
                     {
                         r.Add(fileVersion, new SqlFileInfo {FileInfo = file, SqlInsertMigration = dir.SqlInsertMigration});
-                        Console.WriteLine("[migration] {0} is a potential candidate for migration", name);
+                        log.Debug(String.Format("{0} is a potential candidate for migration", name), "migration");
                     }
                 }
             }

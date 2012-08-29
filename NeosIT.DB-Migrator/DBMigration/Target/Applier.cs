@@ -7,6 +7,8 @@ namespace NeosIT.DB_Migrator.DBMigration.Target
 {
     public abstract class Applier
     {
+        protected Log log = new Log();
+
         protected StreamWriter Sw;
         public string Filename { get; protected set; }
         public int TotalMigrations { get; protected set; }
@@ -21,7 +23,7 @@ namespace NeosIT.DB_Migrator.DBMigration.Target
 
                 Sw = File.CreateText(Filename);
                 TotalMigrations = 0;
-                Console.WriteLine("[migration] output will be written to {0}", Filename);
+                log.Info(String.Format("output will be written to {0}", Filename), "migration");
 
                 Sw.WriteLine("-- migration file was created at {0}", DateTime.Now);
                 Sw.WriteLine(
@@ -30,7 +32,7 @@ namespace NeosIT.DB_Migrator.DBMigration.Target
             }
             catch (Exception e)
             {
-                Console.WriteLine("Sorry, but a temporary file could not be created: {0}", e.Message);
+                log.Error(String.Format("Sorry, but a temporary file could not be created: {0}", e.Message));
             }
         }
 
@@ -45,8 +47,8 @@ namespace NeosIT.DB_Migrator.DBMigration.Target
                 ++TotalMigrations;
                 SqlFileInfo file = unappliedMigrations[key];
 
-                Console.WriteLine("[migration] {0} / {1} {2} scheduled for applying", TotalMigrations, size,
-                                  file.FileInfo.Name);
+                log.Info(String.Format("{0} / {1} {2} scheduled for applying", TotalMigrations, size,
+                                  file.FileInfo.Name), "migration");
 
                 string[] content = File.ReadAllLines(file.FileInfo.FullName);
                 Sw.WriteLine("-- db-migrator:FILE: {0}", file.FileInfo.Name);
@@ -82,7 +84,7 @@ namespace NeosIT.DB_Migrator.DBMigration.Target
                 File.Delete(Filename);
             }
 
-            Console.WriteLine("[cleanup] Temporary file containing all statements deleted");
+            log.Info("Temporary file containing all statements deleted", "cleanup");
         }
 
         public void AppendBeginTransaction()

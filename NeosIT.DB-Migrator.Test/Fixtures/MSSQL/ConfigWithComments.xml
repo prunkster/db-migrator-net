@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+    Hinweis: Alternativ zur manuellen Bearbeitung dieser Datei 
+    können Sie auch mit dem Webverwaltungstool die Einstellungen für Ihre Anwendung konfigurieren. Verwenden Sie die Option 
+    "Website->ASP.NET-Konfiguration" in Visual Studio. Eine 
+    vollständige Liste aller Einstellungen und Kommentare befindet 
+    sich in "machine.config.comments", im Allgemeinen unter 
+    "\Windows\Microsoft.Net\Framework\v2.x\Config". 
+-->
+<configuration>
+	<configSections>
+		<sectionGroup name="system.web.extensions" type="System.Web.Configuration.SystemWebExtensionsSectionGroup, System.Web.Extensions, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31BF3856AD364E35">
+			<sectionGroup name="scripting" type="System.Web.Configuration.ScriptingSectionGroup, System.Web.Extensions, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31BF3856AD364E35">
+				<section name="scriptResourceHandler" type="System.Web.Configuration.ScriptingScriptResourceHandlerSection, System.Web.Extensions, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31BF3856AD364E35" requirePermission="false" allowDefinition="MachineToApplication" />
+				<sectionGroup name="webServices" type="System.Web.Configuration.ScriptingWebServicesSectionGroup, System.Web.Extensions, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31BF3856AD364E35">
+					<section name="jsonSerialization" type="System.Web.Configuration.ScriptingJsonSerializationSection, System.Web.Extensions, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31BF3856AD364E35" requirePermission="false" allowDefinition="Everywhere" />
+					<section name="profileService" type="System.Web.Configuration.ScriptingProfileServiceSection, System.Web.Extensions, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31BF3856AD364E35" requirePermission="false" allowDefinition="MachineToApplication" />
+					<section name="authenticationService" type="System.Web.Configuration.ScriptingAuthenticationServiceSection, System.Web.Extensions, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31BF3856AD364E35" requirePermission="false" allowDefinition="MachineToApplication" />
+					<section name="roleService" type="System.Web.Configuration.ScriptingRoleServiceSection, System.Web.Extensions, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31BF3856AD364E35" requirePermission="false" allowDefinition="MachineToApplication" />
+				</sectionGroup>
+			</sectionGroup>
+		</sectionGroup>
+    <!--Neu-->
+    <section name="log4net" type="log4net.Config.Log4NetConfigurationSectionHandler, log4net" />
+    <!--/Neu-->
+	</configSections>
+  <!--Neu-->
+  <log4net>
+    <appender name="FileAppender" type="log4net.Appender.RollingFileAppender">
+      <file value="${APPDATA}\\my.log" />
+      <appendToFile value="true" />
+      <rollingStyle value="Size" />
+      <maxSizeRollBackups value="2" />
+      <maximumFileSize value="10MB" />
+      <staticLogFileName value="true" />
+      <lockingModel type="log4net.Appender.FileAppender+MinimalLock" />
+      <layout type="log4net.Layout.PatternLayout">
+        <conversionPattern value="%date [%thread] %-1level %logger [%property{NDC}] - %message%newline" />
+      </layout>
+    </appender>
+    <root>
+      <level value="Info" />
+      <appender-ref ref="FileAppender" />
+    </root>
+  </log4net>
+  <!--/Neu-->
+	<appSettings>
+		<add key="log4net.Internal.Debug" value="true" />
+		<add key="useImpersonation" value="false" />
+		<add key="domainname" value="some-domain" />
+	</appSettings>
+	<connectionStrings>
+		<add name="DatabaseConnection" connectionString="Data Source=fixture6Host;Initial Catalog=fixture6Db;uid=fixture6User;password=fixture6Password" />
+		<!--<add name="DatabaseConnection" connectionString="InvalidFixtureString"/>-->
+	</connectionStrings>
+</configuration>

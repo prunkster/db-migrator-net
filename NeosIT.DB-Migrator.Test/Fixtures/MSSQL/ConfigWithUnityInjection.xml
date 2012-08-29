@@ -1,0 +1,13 @@
+﻿<configuration>
+  <unity>
+      <container>
+		  <register type="IDalFactory" mapTo="Some.Namespace.DalFactory, Some.Namespace">
+			<constructor>
+			  <param name="connectionString" type="string">
+				<value value="data source=fixture3Host;Initial Catalog=fixture3Db;uid=fixture3User;password=fixture3Password" />
+			  </param>
+			</constructor>
+		  </register>
+	  </container>
+	</unity>
+</configuration>

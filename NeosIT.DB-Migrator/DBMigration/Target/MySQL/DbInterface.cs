@@ -6,6 +6,7 @@ namespace NeosIT.DB_Migrator.DBMigration.Target.MySQL
 {
     public class DbInterface : IDbInterface
     {
+        private Log log = new Log();
         private const string SqlMajorCol = "major";
         private const string SqlMinorCol = "minor";
 
@@ -49,16 +50,16 @@ namespace NeosIT.DB_Migrator.DBMigration.Target.MySQL
             }
             catch (Exception e)
             {
-                Console.WriteLine("[error] could not retrieve latest revision from database: {0}", e.Message);
+                log.Error(String.Format("Could not retrieve latest revision from database: {0}", e.Message));
 
                 if (Regex.Match(e.Message, ".*migrations.*doesn.t.*exist").Success)
                 {
-                    Console.WriteLine("[create] migrations table does not exist... creating");
+                    log.Warn("Migrations table does not exist... creating");
 
                     try
                     {
                         Executor.ExecCommand(SqlCreateMigration);
-                        Console.WriteLine("[create] migrations table successfully created");
+                        log.Success("migrations table successfully created :-)");
                     }
                     catch (Exception eCreate)
                     {

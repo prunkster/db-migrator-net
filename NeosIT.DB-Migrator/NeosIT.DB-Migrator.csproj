@@ -9,7 +9,7 @@
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>NeosIT.DB_Migrator</RootNamespace>
-    <AssemblyName>NeosIT.DB-Migrator</AssemblyName>
+    <AssemblyName>db-migrator</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
@@ -47,11 +47,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DBMigration\Options\AbstractOptions.cs" />
+    <Compile Include="DBMigration\Log.cs" />
+    <Compile Include="DBMigration\Options\DefaultOptions.cs" />
     <Compile Include="DBMigration\Guard.cs" />
     <Compile Include="DBMigration\Migrator.cs" />
     <Compile Include="DBMigration\Options\Factory.cs" />
     <Compile Include="DBMigration\Parsers\Factory.cs" />
+    <Compile Include="DBMigration\Parsers\MSSQL\ConnectionStringExtractor.cs" />
     <Compile Include="DBMigration\SqlDirInfo.cs" />
     <Compile Include="DBMigration\SqlFileInfo.cs" />
     <Compile Include="DBMigration\SqlStacktrace.cs" />

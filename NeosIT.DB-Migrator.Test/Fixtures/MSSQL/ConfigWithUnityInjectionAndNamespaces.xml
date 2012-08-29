@@ -1,0 +1,13 @@
+﻿<configuration>
+  <unity xmlns="http://schemas.microsoft.com/practices/2010/unity">
+      <container>
+		  <register  type="IDalFactory" mapTo="Some.Namespace.DalFactory, Some.Namespace">
+			<constructor value="BLUBB">
+			  <param name="connectionString" type="string">
+				<value value="data source=fixture4Host;Initial Catalog=fixture4Db;uid=fixture4User;password=fixture4Password" />
+			  </param>
+			</constructor>
+		  </register>
+	  </container>
+	</unity>
+</configuration>

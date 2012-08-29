@@ -1,0 +1,6 @@
+﻿<configuration>
+  <connectionStrings>
+    <add name="ApplicationServices" connectionString="Data Source=fixture1Host;Initial Catalog=fixture1Db;Integrated Security=SSPI;" providerName="System.Data.SqlClient"/>
+    <add name="ApplicationServices2" connectionString="Data Source=invalid;Initial Catalog=invalid;Integrated Security=SSPI;" providerName="System.Data.SqlClient"/>
+  </connectionStrings>
+</configuration>

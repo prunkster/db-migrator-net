@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Data.SqlClient;
 using System.Text.RegularExpressions;
 using NeosIT.DB_Migrator.DBMigration.Strategy;
 using NeosIT.DB_Migrator.DBMigration.Target;
@@ -11,6 +12,7 @@ namespace NeosIT.DB_Migrator.DBMigration
 {
     public class Migrator
     {
+        private Log log = new Log();
         private static string _separatorPath = ";";
         private static string _separatorOpts = ",";
         private string _directories = "." + _separatorOpts + "all" + _separatorOpts + "false";
@@ -39,6 +41,8 @@ namespace NeosIT.DB_Migrator.DBMigration
 
         public void Run()
         {
+            log.Debug(String.Format("current working dir: {0}", Environment.CurrentDirectory), "migration");
+
             IList<string> dirs = _directories.Split(new[] {_separatorPath,}, StringSplitOptions.None);
             Version version = DbInterface.FindLatestMigration();
             Version useVersion = version;
@@ -54,7 +58,7 @@ namespace NeosIT.DB_Migrator.DBMigration
 
             if (0 == mergedMigrations.Count)
             {
-                Console.WriteLine("[migration] no migrations available - project is up-to-date :-)");
+                 log.Success(String.Format("no migrations available - project is up-to-date :-)"), "migration");
                 return;
             }
 
@@ -65,12 +69,12 @@ namespace NeosIT.DB_Migrator.DBMigration
             {
                 Applier.Commit();
                 Applier.Cleanup();
-                Console.WriteLine("[migration] {0} migrations applied. Project is now up-to-date :-)",
-                                  Applier.TotalMigrations);
+                log.Success(String.Format("{0} migrations applied. Project is now up-to-date :-)",
+                                  Applier.TotalMigrations), "migration");
             }
             catch (Exception e)
             {
-                Console.WriteLine("[error] Migration failed: {0}", e.Message);
+                log.Error(String.Format("Migration failed: {0}", e.Message), "migration");
 
                 if (DbInterface.Executor.HasMethod("GetLinenumberOfError"))
                 {
@@ -80,8 +84,8 @@ namespace NeosIT.DB_Migrator.DBMigration
                     SqlStacktrace stacktrace = GetSqlStacktrace(File.ReadAllLines(Applier.Filename), (errorInLine - 1),
                                                                 5, 2);
 
-                    Console.WriteLine("[debug] error occured somewhere in file: {0}", stacktrace.File.FileInfo.FullName);
-                    Console.WriteLine("... lines of aggregated SQL script ...");
+                    log.Debug(String.Format("error occured somewhere in file: {0}", stacktrace.File.FileInfo.FullName));
+                    log.Debug("... lines of aggregated SQL script ...");
 
                     int curLine = stacktrace.BeginLine;
 
@@ -91,14 +95,15 @@ namespace NeosIT.DB_Migrator.DBMigration
                         {
                         }
 
-                        Console.WriteLine("\t{0}\t{1}", curLine, item);
+                        log.Debug(String.Format("\t{0}\t{1}", curLine, item));
                     }
 
-                    Console.WriteLine();
+                    log.Debug("");
                 }
 
-                Console.WriteLine("[error] SQL-script has not been deleted for debugging purposes ({0})",
-                                  Applier.Filename);
+                log.Error(String.Format("SQL-script has not been deleted for debugging purposes ({0})",
+                                  Applier.Filename));
+                Environment.ExitCode = 1;
             }
         }
 
@@ -151,7 +156,7 @@ namespace NeosIT.DB_Migrator.DBMigration
 
             foreach (SqlDirInfo sqlDirInfo in directories)
             {
-                Console.WriteLine("[merging] Searching directory '{0}'", sqlDirInfo.DirectoryInfo.FullName);
+                log.Info(String.Format("Searching directory '{0}'", sqlDirInfo.DirectoryInfo.FullName), "merging");
 
                 // if latest file should be used, the latest migration inside the database is not relevant
                 Version useVersion = sqlDirInfo.LatestOnly ? new Version() : version;
@@ -164,10 +169,9 @@ namespace NeosIT.DB_Migrator.DBMigration
 
                 if (sqlDirInfo.LatestOnly)
                 {
-                    Console.WriteLine("[migration] only the latest migration will be applied");
-                    //def latest_version = ks.pop()
-
-                    //versions[latest_version] = candidates[latest_version]
+                    log.Info("only the latest migration will be applied", "merging");
+                    Version latestVersionInStack = candidates.Keys.Last();
+                    versions.Add(latestVersionInStack, candidates[latestVersionInStack]);
                 }
                 else
                 {
@@ -178,9 +182,8 @@ namespace NeosIT.DB_Migrator.DBMigration
                 {
                     if (r.ContainsKey(kvp.Key))
                     {
-                        Console.WriteLine(
-                            "[merging] You have a duplicate in both directories: {0} <-> {1}. First one will be used.",
-                            r[kvp.Key].FileInfo.FullName, kvp.Value.FileInfo.FullName);
+                        log.Warn(String.Format("You have a duplicate in both directories: {0} <-> {1}. First one will be used.",
+                            r[kvp.Key].FileInfo.FullName, kvp.Value.FileInfo.FullName), "merging");
                     }
                     else
                     {

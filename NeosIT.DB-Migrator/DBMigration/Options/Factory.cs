@@ -5,7 +5,7 @@ namespace NeosIT.DB_Migrator.DBMigration.Options
 {
     public class Factory
     {
-        public static AbstractOptions Create(string[] args)
+        public static DefaultOptions Create(string[] args)
         {
             string target = string.Empty;
             int i = 0;
@@ -40,7 +40,7 @@ namespace NeosIT.DB_Migrator.DBMigration.Options
                 i++;
             }
             
-            AbstractOptions options;
+            DefaultOptions options;
             CommandLineParser parser = new CommandLineParser();
             switch (target)
             {
