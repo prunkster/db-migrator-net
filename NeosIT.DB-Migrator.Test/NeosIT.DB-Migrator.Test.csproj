@@ -49,6 +49,7 @@
     <Compile Include="DBMigration\MigratorTest.cs" />
     <Compile Include="DBMigration\Strategy\FlatTest.cs" />
     <Compile Include="DBMigration\Target\MSSQL\ConnectionStringExtractorTest.cs" />
+    <Compile Include="DBMigration\Target\MSSQL\DbInterfaceTest.cs" />
     <Compile Include="DBMigration\Target\MSSQL\ExecutorTest.cs" />
     <Compile Include="DBMigration\Target\MSSQL\ParserTest.cs" />
     <Compile Include="DBMigration\Target\MySQL\ExecutorTest.cs" />
