@@ -64,6 +64,13 @@ namespace NeosIT.DB_Migrator.DBMigration.Parsers
             if (CurrentOptions.Directories.Count > 0)
                 migrator.Directories = CurrentOptions.Directories.Aggregate((x, y) => x + migrator.SeparatorPath + y);
 
+            migrator.OnlySimulate = CurrentOptions.OnlySimulate;
+
+            if (!string.IsNullOrWhiteSpace(CurrentOptions.AppliedVersion))
+            {
+                migrator.ReferenceVersion = new Version(CurrentOptions.AppliedVersion);
+            }
+
             return migrator;
         }
 

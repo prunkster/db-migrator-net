@@ -20,6 +20,8 @@ namespace NeosIT.DB_Migrator.DBMigration
         public IDbInterface DbInterface { get; set; }
         public IStrategy Strategy { get; set; }
         public Applier Applier { get; set; }
+        public bool OnlySimulate { get; set; }
+        public Version ReferenceVersion { get; set; }
 
         public string SeparatorPath
         {
@@ -41,11 +43,23 @@ namespace NeosIT.DB_Migrator.DBMigration
 
         public void Run()
         {
+            if (OnlySimulate)
+            {
+                log.Warn("Only simulating the migration process. No migration will be applied!", "migration");
+            }
+
             log.Debug(String.Format("current working dir: {0}", Environment.CurrentDirectory), "migration");
 
             IList<string> dirs = _directories.Split(new[] {_separatorPath,}, StringSplitOptions.None);
-            Version version = DbInterface.FindLatestMigration();
-            Version useVersion = version;
+
+            if (ReferenceVersion == null)
+            {
+                ReferenceVersion = DbInterface.FindLatestMigration();
+            }
+
+            log.Info(String.Format("current installed migration: {0}", ReferenceVersion.ToString()), "migration");
+
+            Version useVersion = ReferenceVersion;
 
             IList<SqlDirInfo> stack = new List<SqlDirInfo>();
 
@@ -54,11 +68,11 @@ namespace NeosIT.DB_Migrator.DBMigration
                 stack.Add(CreateDirElement(pathdef));
             }
 
-            Dictionary<Version, SqlFileInfo> mergedMigrations = MergeMigrationsFromDirectories(stack, version);
+            Dictionary<Version, SqlFileInfo> mergedMigrations = MergeMigrationsFromDirectories(stack, ReferenceVersion);
 
             if (0 == mergedMigrations.Count)
             {
-                 log.Success(String.Format("no migrations available - project is up-to-date :-)"), "migration");
+                log.Success(String.Format("no migrations available - project is up-to-date :-)"), "migration");
                 return;
             }
 
@@ -69,8 +83,17 @@ namespace NeosIT.DB_Migrator.DBMigration
             {
                 Applier.Commit();
                 Applier.Cleanup();
-                log.Success(String.Format("{0} migrations applied. Project is now up-to-date :-)",
-                                  Applier.TotalMigrations), "migration");
+
+                if (OnlySimulate)
+                {
+                    log.Success(String.Format("{0} migrations would be applied - if not running a simulation", Applier.TotalMigrations), "migration");
+                }
+                else
+                {
+                    Console.WriteLine(DbInterface.Executor.ExecFile(Applier.Filename));
+                    log.Success(String.Format("{0} migrations applied. Project is now up-to-date :-)",
+                                      Applier.TotalMigrations), "migration");
+                }
             }
             catch (Exception e)
             {
@@ -91,10 +114,6 @@ namespace NeosIT.DB_Migrator.DBMigration
 
                     foreach (string item in stacktrace.Lines)
                     {
-                        if (curLine == errorInLine)
-                        {
-                        }
-
                         log.Debug(String.Format("\t{0}\t{1}", curLine, item));
                     }
 

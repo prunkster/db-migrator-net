@@ -14,17 +14,17 @@ namespace NeosIT.DB_Migrator.DBMigration.Target
                 case "mysql":
                     migrator.DbInterface = new DbInterface();
                     migrator.DbInterface.Executor = new Executor();
-                    migrator.Applier = new MySQL.Applier {DbInterface = migrator.DbInterface,};
+                    migrator.Applier = new MySQL.Applier();
                     break;
                 case "mssql":
                     migrator.DbInterface = new MSSQL.DbInterface();
                     migrator.DbInterface.Executor = new MSSQL.Executor();
-                    migrator.Applier = new MSSQL.Applier {DbInterface = migrator.DbInterface,};
+                    migrator.Applier = new MSSQL.Applier();
                     break;
                 case "postgresql":
                     migrator.DbInterface = new PostgreSQL.DbInterface();
                     migrator.DbInterface.Executor = new PostgreSQL.Executor();
-                    migrator.Applier = new PostgreSQL.Applier {DbInterface = migrator.DbInterface,};
+                    migrator.Applier = new PostgreSQL.Applier();
                     break;
                 default:
                     throw new Exception("Target name " + targetName + " is not valid");

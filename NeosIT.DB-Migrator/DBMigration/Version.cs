@@ -1,4 +1,5 @@
-﻿namespace NeosIT.DB_Migrator.DBMigration
+﻿using System.Text.RegularExpressions;
+namespace NeosIT.DB_Migrator.DBMigration
 {
     /**
      * Version entity to make migrations comparable
@@ -9,7 +10,7 @@
         public static int MinorMaxlength = 4;
         public string Major = "0";
         public string Minor = "0";
-        private long? _version;
+        private long _version = 0;
 
         public Version()
         {
@@ -18,6 +19,18 @@
         public Version(long version)
         {
             _version = version;
+        }
+
+        public Version(string version)
+        {
+            Match matchMajor = Regex.Match(version, @"(\d*)([-|_|:])");
+            Match matchMinor = Regex.Match(version, @"([-|_|:])(\d*)");
+
+            if (matchMajor.Success && matchMinor.Success)
+            {
+                Major = matchMajor.Groups[1].Value;
+                Minor = matchMinor.Groups[2].Value;
+            }
         }
 
         /**
@@ -31,7 +44,7 @@
                 _version = long.Parse(Major + Minor.PadLeft(MinorMaxlength, '0'));
             /*}*/
 
-            return _version.Value;
+            return _version;
         }
 
         /**

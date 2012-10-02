@@ -19,16 +19,10 @@ namespace NeosIT.DB_Migrator.DBMigration.Strategy
             {
                 string name = file.Name;
 
-                Match matchMajor = Regex.Match(name, @"(\d*)([-|_])");
-                Match matchMinor = Regex.Match(name, @"([-|_])(\d*)");
+                Version fileVersion = new Version(name);
 
-                if (matchMajor.Success && matchMinor.Success)
+                if (fileVersion.GetVersion() > 0)
                 {
-                    string major = matchMajor.Groups[1].Value;
-                    string minor = matchMinor.Groups[2].Value;
-
-                    var fileVersion = new Version {Minor = minor, Major = major,};
-
                     if (guard.IsMigrationAllowed(file, version, fileVersion))
                     {
                         r.Add(fileVersion, new SqlFileInfo {FileInfo = file, SqlInsertMigration = dir.SqlInsertMigration});
