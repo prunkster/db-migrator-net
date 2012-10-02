@@ -12,14 +12,15 @@ namespace NeosIT.DB_Migrator.DBMigration.Target
         protected StreamWriter Sw;
         public string Filename { get; protected set; }
         public int TotalMigrations { get; protected set; }
-        public IDbInterface DbInterface { get; set; }
 
-        public void Begin()
+        /// <summary>
+        /// Initialies the output file
+        /// </summary>
+        public virtual void Begin()
         {
             try
             {
                 Filename = new FileInfo("migration_" + Path.GetRandomFileName() + ".sql").FullName;
-                //Filename = "migration_" + Path.GetRandomFileName() + ".sql";
 
                 Sw = File.CreateText(Filename);
                 TotalMigrations = 0;
@@ -35,49 +36,79 @@ namespace NeosIT.DB_Migrator.DBMigration.Target
                 log.Error(String.Format("Sorry, but a temporary file could not be created: {0}", e.Message));
             }
         }
-
-        public bool Prepare(Dictionary<Version, SqlFileInfo> unappliedMigrations)
+        
+        /// <summary>
+        /// Iterates over every unapplied migration and writes them to the target file
+        /// </summary>
+        /// <param name="unappliedMigrations"></param>
+        /// <returns></returns>
+        public virtual bool Prepare(Dictionary<Version, SqlFileInfo> unappliedMigrations)
         {
             int size = unappliedMigrations.Count;
             unappliedMigrations = unappliedMigrations.OrderBy(x => x.Key.GetVersion()).ToDictionary(x => x.Key,
                                                                                                     x => x.Value);
 
-            foreach (Version key in unappliedMigrations.Keys)
+            foreach (Version version in unappliedMigrations.Keys)
             {
                 ++TotalMigrations;
-                SqlFileInfo file = unappliedMigrations[key];
+                SqlFileInfo file = unappliedMigrations[version];
 
                 log.Info(String.Format("{0} / {1} {2} scheduled for applying", TotalMigrations, size,
                                   file.FileInfo.Name), "migration");
 
                 string[] content = File.ReadAllLines(file.FileInfo.FullName);
-                Sw.WriteLine("-- db-migrator:FILE: {0}", file.FileInfo.Name);
+                BeforeMigrationFile(version, file);
 
                 foreach (string line in content)
                 {
                     Sw.WriteLine(line);
                 }
 
-                if (file.SqlInsertMigration)
-                {
-                    Sw.WriteLine("INSERT INTO migrations (major, minor, filename) VALUES('{0}', '{1}', '{2}');",
-                                 key.Major, key.Minor, file.FileInfo.Name);
-                }
+                AfterMigrationFile(version, file);
+
             }
 
             return true;
         }
 
-        public void Commit()
+        /// <summary>
+        /// Is executed before the content of the migration file is copied to output file
+        /// </summary>
+        /// <param name="version"></param>
+        /// <param name="file"></param>
+        public virtual void BeforeMigrationFile(Version version, SqlFileInfo file)
+        {
+            Sw.WriteLine("-- db-migrator:FILE: {0}", file.FileInfo.Name);
+        }
+
+        /// <summary>
+        /// Is executed after the content of the migration file has been copied to output file
+        /// </summary>
+        /// <param name="version"></param>
+        /// <param name="file"></param>
+        public virtual void AfterMigrationFile(Version version, SqlFileInfo file)
+        {
+            if (file.SqlInsertMigration)
+            {
+                Sw.WriteLine("INSERT INTO migrations (major, minor, filename) VALUES('{0}', '{1}', '{2}');",
+                             version.Major, version.Minor, file.FileInfo.Name);
+            }
+        }
+
+        /// <summary>
+        /// Is executed after copying every migration file to output file
+        /// </summary>
+        public virtual void Commit()
         {
             AppendCommitTransaction();
 
             Sw.Dispose();
-
-            Console.WriteLine(DbInterface.Executor.ExecFile(Filename));
         }
 
-        public void Cleanup()
+        /// <summary>
+        /// Removes output file
+        /// </summary>
+        public virtual void Cleanup()
         {
             if (File.Exists(Filename))
             {
@@ -87,11 +118,11 @@ namespace NeosIT.DB_Migrator.DBMigration.Target
             log.Info("Temporary file containing all statements deleted", "cleanup");
         }
 
-        public void AppendBeginTransaction()
+        public virtual void AppendBeginTransaction()
         {
         }
 
-        public void AppendCommitTransaction()
+        public virtual void AppendCommitTransaction()
         {
         }
     }

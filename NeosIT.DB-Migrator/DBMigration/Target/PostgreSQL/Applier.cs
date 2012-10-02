@@ -2,12 +2,12 @@
 {
     public class Applier : Target.Applier
     {
-        public new void AppendBeginTransaction()
+        public override void AppendBeginTransaction()
         {
             Sw.WriteLine("BEGIN;");
         }
 
-        public new void AppendCommitTransaction()
+        public override void AppendCommitTransaction()
         {
             Sw.WriteLine("COMMIT;");
         }

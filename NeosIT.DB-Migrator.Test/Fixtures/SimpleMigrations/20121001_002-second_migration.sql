@@ -1,0 +1,1 @@
+CREATE TABLE second_migration(id int not null auto_increment);

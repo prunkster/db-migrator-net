@@ -51,6 +51,7 @@
     <Compile Include="DBMigration\Target\MSSQL\ConnectionStringExtractorTest.cs" />
     <Compile Include="DBMigration\Target\MSSQL\DbInterfaceTest.cs" />
     <Compile Include="DBMigration\Target\MSSQL\ExecutorTest.cs" />
+    <Compile Include="DBMigration\Target\MSSQL\ApplierTest.cs" />
     <Compile Include="DBMigration\Target\MSSQL\ParserTest.cs" />
     <Compile Include="DBMigration\Target\MySQL\ExecutorTest.cs" />
     <Compile Include="DBMigration\Target\MySQL\ParserTest.cs" />
@@ -111,6 +112,12 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Fixtures\MySQL\Flat\21000101_002.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Fixtures\SimpleMigrations\20121001_001-first_migration.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Fixtures\SimpleMigrations\20121001_002-second_migration.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Libs\nunit.framework.dll" />
