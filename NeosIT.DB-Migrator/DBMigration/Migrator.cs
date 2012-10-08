@@ -82,7 +82,6 @@ namespace NeosIT.DB_Migrator.DBMigration
             try
             {
                 Applier.Commit();
-                Applier.Cleanup();
 
                 if (OnlySimulate)
                 {
@@ -94,6 +93,8 @@ namespace NeosIT.DB_Migrator.DBMigration
                     log.Success(String.Format("{0} migrations applied. Project is now up-to-date :-)",
                                       Applier.TotalMigrations), "migration");
                 }
+
+                Applier.Cleanup();
             }
             catch (Exception e)
             {
