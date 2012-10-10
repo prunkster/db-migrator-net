@@ -4,12 +4,12 @@
     {
         public override void AppendBeginTransaction()
         {
-            Sw.WriteLine("BEGIN TRANSACTION;");
+//            Sw.WriteLine("BEGIN TRANSACTION;");
         }
 
         public override void AppendCommitTransaction()
         {
-            Sw.WriteLine("COMMIT;");
+//            Sw.WriteLine("COMMIT;");
         }
 
         public override void AfterMigrationFile(Version version, SqlFileInfo file)

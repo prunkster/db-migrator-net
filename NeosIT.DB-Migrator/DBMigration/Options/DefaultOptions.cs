@@ -45,6 +45,9 @@ namespace NeosIT.DB_Migrator.DBMigration.Options
         [Option("o", "only-simulate", HelpText = "Temporary file will not be deleted and the migrations will not be applied")]
         public bool OnlySimulate { get; set; }
 
+        [Option("k", "keep-temporary-file", HelpText = "Keep temporary file containing all SQL statements")]
+        public bool KeepTemporaryFile { get; set; }
+
         [ValueList(typeof(List<string>), MaximumElements = 1)]
         public IList<string> Directories { get; set; }
 
