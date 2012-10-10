@@ -75,7 +75,7 @@ namespace NeosIT.DB_Migrator.DBMigration.Target.MySQL
 
             if (0 != proc.ExitCode)
             {
-                throw !string.IsNullOrWhiteSpace(err)
+                throw !string.IsNullOrEmpty(err)
                           ? new Exception(err)
                           : new Exception(
                                 "Command did not exit normal but although did not return any error text. Is the executed command correct? Normal text stream follows:\n" +
@@ -107,19 +107,19 @@ namespace NeosIT.DB_Migrator.DBMigration.Target.MySQL
         {
             IList<string> r = new List<string>();
 
-            if (!string.IsNullOrWhiteSpace(Host))
+            if (!string.IsNullOrEmpty(Host))
             {
                 r.Add("--host=" + Host);
             }
 
-            if (!string.IsNullOrWhiteSpace(Username))
+            if (!string.IsNullOrEmpty(Username))
             {
                 r.Add("--user=" + Username);
             }
 
             r.Add("--password=" + Password);
 
-            if (!string.IsNullOrWhiteSpace(Args))
+            if (!string.IsNullOrEmpty(Args))
             {
                 r.Add(Args);
             }
@@ -131,12 +131,12 @@ namespace NeosIT.DB_Migrator.DBMigration.Target.MySQL
                 r.Add("--verbose");
             }
 
-            if (!string.IsNullOrWhiteSpace(cmd))
+            if (!string.IsNullOrEmpty(cmd))
             {
                 r.Add("--execute=" + cmd);
             }
 
-            if (!string.IsNullOrWhiteSpace(Database))
+            if (!string.IsNullOrEmpty(Database))
             {
                 r.Add("--database=" + Database);
             }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using NeosIT.DB_Migrator.DBMigration;
 using NeosIT.DB_Migrator.DBMigration.Strategy;
 using NUnit.Framework;
@@ -83,10 +84,12 @@ namespace NeosIT.DB_Migrator.Test.DBMigration
             Dictionary<Version, SqlFileInfo> r = _migrator.MergeMigrationsFromDirectories(pathdef, new Version());
 
             Assert.AreEqual(4, r.Count);
-            Assert.IsFalse(r.ContainsKey(new Version(201201010001)));
-            Assert.IsFalse(r.ContainsKey(new Version(201201010002)));
-            Assert.IsFalse(r.ContainsKey(new Version(201201040001)));
-            Assert.IsTrue(r[new Version(201206060001)].FileInfo.Name.EndsWith("conflict.sql"));
+            Assert.IsFalse(r.Keys.Any(x => x.GetVersion() == 201201010001));
+            Assert.IsFalse(r.Keys.Any(x => x.GetVersion() == 201201010002));
+            Assert.IsFalse(r.Keys.Any(x => x.GetVersion() == 201201040001));
+
+            var v = r.Keys.Single(x => x.GetVersion() == 201206060001);
+            Assert.IsTrue(r[v].FileInfo.Name.EndsWith("conflict.sql"));
         }
 
         [Test]
@@ -102,7 +105,7 @@ namespace NeosIT.DB_Migrator.Test.DBMigration
             Dictionary<Version, SqlFileInfo> r = _migrator.MergeMigrationsFromDirectories(pathdef, new Version());
 
             Assert.AreEqual(7, r.Count);
-            var v = new Version(201206060001);
+            var v = r.Keys.Single(x => x.GetVersion() == 201206060001);
             Assert.IsTrue(r[v].FileInfo.Name.EndsWith("conflict.sql"));
         }
     }

@@ -51,22 +51,22 @@ namespace NeosIT.DB_Migrator.DBMigration.Parsers.MSSQL
                 executor.Password = string.Empty;
             }
 
-            if (!string.IsNullOrWhiteSpace(r.DataSource))
+            if (!string.IsNullOrEmpty(r.DataSource))
             {
                 executor.Host = r.DataSource;
             }
 
-            if (!string.IsNullOrWhiteSpace(r.UserID))
+            if (!string.IsNullOrEmpty(r.UserID))
             {
                 executor.Username = r.UserID;
             }
 
-            if (!string.IsNullOrWhiteSpace(r.Password))
+            if (!string.IsNullOrEmpty(r.Password))
             {
                 executor.Password = r.Password;
             }
 
-            if (!string.IsNullOrWhiteSpace(r.InitialCatalog))
+            if (!string.IsNullOrEmpty(r.InitialCatalog))
             {
                 executor.Database = r.InitialCatalog;
             }

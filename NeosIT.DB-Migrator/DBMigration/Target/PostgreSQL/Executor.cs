@@ -76,7 +76,7 @@ namespace NeosIT.DB_Migrator.DBMigration.Target.PostgreSQL
 
             if (0 != proc.ExitCode)
             {
-                throw !string.IsNullOrWhiteSpace(err)
+                throw !string.IsNullOrEmpty(err)
                           ? new Exception(err)
                           : new Exception(
                                 "Command did not exit normal but although did not return any error text. Is the executed command correct? Normal text stream follows:\n" +
@@ -113,32 +113,32 @@ namespace NeosIT.DB_Migrator.DBMigration.Target.PostgreSQL
             IList<string> r = new List<string>();
             r.Add("-F;");
 
-            if (!string.IsNullOrWhiteSpace(Host))
+            if (!string.IsNullOrEmpty(Host))
             {
                 r.Add("--host=" + Host);
             }
 
-            if (!string.IsNullOrWhiteSpace(Username))
+            if (!string.IsNullOrEmpty(Username))
             {
                 r.Add("--username=" + Username);
             }
 
-            if (!string.IsNullOrWhiteSpace(Password))
+            if (!string.IsNullOrEmpty(Password))
             {
                 r.Add("-w");
             }
 
-            if (!string.IsNullOrWhiteSpace(Args))
+            if (!string.IsNullOrEmpty(Args))
             {
                 r.Add(Args);
             }
 
-            if (!string.IsNullOrWhiteSpace(Database))
+            if (!string.IsNullOrEmpty(Database))
             {
                 r.Add("--dbname=" + Database);
             }
 
-            if (!string.IsNullOrWhiteSpace(Args))
+            if (!string.IsNullOrEmpty(Args))
             {
                 r.Add(Args);
             }

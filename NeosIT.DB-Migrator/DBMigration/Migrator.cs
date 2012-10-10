@@ -173,7 +173,7 @@ namespace NeosIT.DB_Migrator.DBMigration
                        {
                            BeginLine = beginLine,
                            File =
-                               string.IsNullOrWhiteSpace(referenceFile)
+                               string.IsNullOrEmpty(referenceFile)
                                    ? null
                                    : new SqlFileInfo {FileInfo = new FileInfo(referenceFile),},
                            Lines = output,

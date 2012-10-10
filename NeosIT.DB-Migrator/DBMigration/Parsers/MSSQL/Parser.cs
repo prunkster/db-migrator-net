@@ -17,7 +17,7 @@ namespace NeosIT.DB_Migrator.DBMigration.Parsers.MSSQL
             }
 
             // Load configuration
-            if (!string.IsNullOrWhiteSpace(((Options.MSSQL.Options)CurrentOptions).XmlConfiguration))
+            if (!string.IsNullOrEmpty(((Options.MSSQL.Options)CurrentOptions).XmlConfiguration))
             {
                 String configurationPath = ((Options.MSSQL.Options)CurrentOptions).XmlConfiguration;
                 String xpathExpression = ((Options.MSSQL.Options)CurrentOptions).XpathExpression.Trim('"').Trim('\'');
@@ -27,7 +27,7 @@ namespace NeosIT.DB_Migrator.DBMigration.Parsers.MSSQL
                 var ns = new XmlNamespaceManager(nav.NameTable);
 
                 // add namespaces if needed
-                if (!string.IsNullOrWhiteSpace(((Options.MSSQL.Options)CurrentOptions).XmlNamespaces))
+                if (!string.IsNullOrEmpty(((Options.MSSQL.Options)CurrentOptions).XmlNamespaces))
                 {
                     var namespaceOption = ((Options.MSSQL.Options)CurrentOptions).XmlNamespaces.Trim('"').Trim('\'');
                     string[] namespaces = namespaceOption.Split(';');
@@ -42,8 +42,8 @@ namespace NeosIT.DB_Migrator.DBMigration.Parsers.MSSQL
                 cse.LoadConnectionStringInto(xpathExpression, migrator.DbInterface.Executor);
             }
 
-            if (!string.IsNullOrWhiteSpace(migrator.DbInterface.Executor.Username) &&
-                string.IsNullOrWhiteSpace(migrator.DbInterface.Executor.Password))
+            if (!string.IsNullOrEmpty(migrator.DbInterface.Executor.Username) &&
+                string.IsNullOrEmpty(migrator.DbInterface.Executor.Password))
             {
                 throw new Exception("You must apply a password for your database username!");
             }

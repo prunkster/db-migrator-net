@@ -39,7 +39,7 @@ namespace NeosIT.DB_Migrator.DBMigration.Options
         [Option("t", "target", HelpText = "Target SQL system (can be MSSQL, MySQL or PostgreSQL", Required = true)]
         public string Target { get; set; }
 
-        [Option("a", "applied-version", HelpText = "Manually set the currently applied version. If set, the current version will not be retrieved from database. Format must be 'yyyymmdd[-|_]:iiii'.")]
+        [Option("A", "applied-version", HelpText = "Manually set the currently applied version. If set, the current version will not be retrieved from database. Format must be 'yyyymmdd[-|_]:iiii'.")]
         public string AppliedVersion { get; set; }
 
         [Option("o", "only-simulate", HelpText = "Temporary file will not be deleted and the migrations will not be applied")]

@@ -40,25 +40,25 @@ namespace NeosIT.DB_Migrator.DBMigration.Parsers
             // if (options.section)
             // ini_parser.use_section = options.section
 
-            if (!string.IsNullOrWhiteSpace(CurrentOptions.Suffix))
+            if (!string.IsNullOrEmpty(CurrentOptions.Suffix))
                 migrator.Guard.Suffix = CurrentOptions.Suffix;
 
-            if (!string.IsNullOrWhiteSpace(CurrentOptions.Host))
+            if (!string.IsNullOrEmpty(CurrentOptions.Host))
                 migrator.DbInterface.Executor.Host = CurrentOptions.Host;
 
-            if (!string.IsNullOrWhiteSpace(CurrentOptions.Password))
+            if (!string.IsNullOrEmpty(CurrentOptions.Password))
                 migrator.DbInterface.Executor.Password = CurrentOptions.Password;
             
-            if (!string.IsNullOrWhiteSpace(CurrentOptions.Database))
+            if (!string.IsNullOrEmpty(CurrentOptions.Database))
                 migrator.DbInterface.Executor.Database = CurrentOptions.Database;
 
-            if (!string.IsNullOrWhiteSpace(CurrentOptions.Command))
+            if (!string.IsNullOrEmpty(CurrentOptions.Command))
                 migrator.DbInterface.Executor.Command = CurrentOptions.Command;
             
-            if (!string.IsNullOrWhiteSpace(CurrentOptions.Args))
+            if (!string.IsNullOrEmpty(CurrentOptions.Args))
                 migrator.DbInterface.Executor.Args = CurrentOptions.Args;
 
-            if (!string.IsNullOrWhiteSpace(CurrentOptions.Username))
+            if (!string.IsNullOrEmpty(CurrentOptions.Username))
                 migrator.DbInterface.Executor.Username = CurrentOptions.Username;
 
             if (CurrentOptions.Directories.Count > 0)
@@ -67,7 +67,7 @@ namespace NeosIT.DB_Migrator.DBMigration.Parsers
             migrator.OnlySimulate = CurrentOptions.OnlySimulate;
             migrator.KeepTemporaryFile = CurrentOptions.KeepTemporaryFile;
 
-            if (!string.IsNullOrWhiteSpace(CurrentOptions.AppliedVersion))
+            if (!string.IsNullOrEmpty(CurrentOptions.AppliedVersion))
             {
                 migrator.ReferenceVersion = new Version(CurrentOptions.AppliedVersion);
             }

@@ -20,7 +20,7 @@ namespace NeosIT.DB_Migrator.DBMigration
                 return false;
             }
 
-            if (!string.IsNullOrWhiteSpace(_suffix))
+            if (!string.IsNullOrEmpty(_suffix))
             {
                 if (!file.Extension.Equals(_suffix, StringComparison.OrdinalIgnoreCase))
                 {

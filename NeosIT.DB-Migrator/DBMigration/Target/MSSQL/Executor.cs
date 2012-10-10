@@ -74,7 +74,7 @@ namespace NeosIT.DB_Migrator.DBMigration.Target.MSSQL
 
             if (0 != proc.ExitCode)
             {
-                throw !string.IsNullOrWhiteSpace(err)
+                throw !string.IsNullOrEmpty(err)
                           ? new Exception(err)
                           : new Exception(
                                 "Command did not exit normal but although did not return any error text. Is the executed command correct? Normal text stream follows:\n" +
@@ -112,16 +112,16 @@ namespace NeosIT.DB_Migrator.DBMigration.Target.MSSQL
             // parameter -b is needed for retrieving the exit code. Otherwise osql returns always 0
             r.Add("-b");
 
-            if (!string.IsNullOrWhiteSpace(Host))
+            if (!string.IsNullOrEmpty(Host))
             {
                 r.Add("-S " + Host);
             }
 
-            if (!string.IsNullOrWhiteSpace(Username))
+            if (!string.IsNullOrEmpty(Username))
             {
                 r.Add("-U " + Username);
 
-                if (!string.IsNullOrWhiteSpace(Password))
+                if (!string.IsNullOrEmpty(Password))
                 {
                     r.Add("-P " + Password);
                 }
@@ -138,7 +138,7 @@ namespace NeosIT.DB_Migrator.DBMigration.Target.MSSQL
                 r.Add("-V 10");
             }
 
-            if (!string.IsNullOrWhiteSpace(Database))
+            if (!string.IsNullOrEmpty(Database))
             {
                 r.Add("-d " + Database);
             }
