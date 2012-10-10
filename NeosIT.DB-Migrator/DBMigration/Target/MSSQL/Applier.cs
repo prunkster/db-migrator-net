@@ -5,6 +5,7 @@
         public override void AppendBeginTransaction()
         {
             Sw.WriteLine("BEGIN TRANSACTION;");
+            Sw.WriteLine("GO");
         }
 
         public override void AppendCommitTransaction()

@@ -65,6 +65,7 @@ namespace NeosIT.DB_Migrator.DBMigration.Parsers
                 migrator.Directories = CurrentOptions.Directories.Aggregate((x, y) => x + migrator.SeparatorPath + y);
 
             migrator.OnlySimulate = CurrentOptions.OnlySimulate;
+            migrator.KeepTemporaryFile = CurrentOptions.KeepTemporaryFile;
 
             if (!string.IsNullOrWhiteSpace(CurrentOptions.AppliedVersion))
             {

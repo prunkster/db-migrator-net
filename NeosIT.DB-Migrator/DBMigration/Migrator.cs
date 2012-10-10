@@ -21,6 +21,7 @@ namespace NeosIT.DB_Migrator.DBMigration
         public IStrategy Strategy { get; set; }
         public Applier Applier { get; set; }
         public bool OnlySimulate { get; set; }
+        public bool KeepTemporaryFile { get; set; }
         public Version ReferenceVersion { get; set; }
 
         public string SeparatorPath
@@ -79,10 +80,11 @@ namespace NeosIT.DB_Migrator.DBMigration
             Applier.Begin();
             Applier.Prepare(mergedMigrations);
 
+            bool removeFile = !KeepTemporaryFile;
+
             try
             {
                 Applier.Commit();
-                Applier.Cleanup();
 
                 if (OnlySimulate)
                 {
@@ -120,9 +122,19 @@ namespace NeosIT.DB_Migrator.DBMigration
                     log.Debug("");
                 }
 
+                removeFile = false;
+
+                Environment.ExitCode = 1;
+            }
+
+            if (removeFile)
+            {
+                Applier.Cleanup();
+            }
+            else
+            {
                 log.Error(String.Format("SQL-script has not been deleted for debugging purposes ({0})",
                                   Applier.Filename));
-                Environment.ExitCode = 1;
             }
         }
 
