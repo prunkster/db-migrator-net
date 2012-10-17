@@ -24,5 +24,8 @@ namespace NeosIT.DB_Migrator.DBMigration.Options.MSSQL
 
         [Option("N", "namespaces", HelpText = "Define namespaces with semicolon separated: 'ns1=http://domain/namespace;ns2=http://domain/namespace2'. Make sure you are referencing the nodes in your XPath expression with namespaces suffixes!")]
         public virtual string XmlNamespaces { get; set; }
+
+        [Option("e", "encoding", HelpText = "Set default encoding. The default for MSSQL is UCS-2. Every value for System.Text.Encoding.GetEncoding() can be used")]
+        public override string Encoding { get ; set; }
     }
 }

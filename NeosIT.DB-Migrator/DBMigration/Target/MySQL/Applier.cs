@@ -4,13 +4,13 @@
     {
         public override void AppendBeginTransaction()
         {
-            Sw.WriteLine("SET autocommit=0;");
-            Sw.WriteLine("START TRANSACTION;");
+            streamWriter.WriteLine("SET autocommit=0;");
+            streamWriter.WriteLine("START TRANSACTION;");
         }
 
         public override void AppendCommitTransaction()
         {
-            Sw.WriteLine("COMMIT;");
+            streamWriter.WriteLine("COMMIT;");
         }
     }
 }
