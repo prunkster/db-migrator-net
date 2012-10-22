@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 
 namespace NeosIT.DB_Migrator.DBMigration.Target
 {
@@ -9,7 +10,8 @@ namespace NeosIT.DB_Migrator.DBMigration.Target
     {
         protected Log log = new Log();
 
-        protected StreamWriter Sw;
+        protected StreamWriter streamWriter;
+        public Encoding FileEncoding { get; set; }
         public string Filename { get; protected set; }
         public int TotalMigrations { get; protected set; }
 
@@ -21,13 +23,13 @@ namespace NeosIT.DB_Migrator.DBMigration.Target
             try
             {
                 Filename = new FileInfo("migration_" + Path.GetRandomFileName() + ".sql").FullName;
+                streamWriter = new StreamWriter(Filename, false, FileEncoding);
 
-                Sw = File.CreateText(Filename);
                 TotalMigrations = 0;
                 log.Info(String.Format("output will be written to {0}", Filename), "migration");
 
-                Sw.WriteLine("-- migration file was created at {0}", DateTime.Now);
-                Sw.WriteLine(
+                streamWriter.WriteLine("-- migration file was created at {0}", DateTime.Now);
+                streamWriter.WriteLine(
                     "-- all migrations are concated to one big transaction so that a consistent state will be reached after finishing the migration");
                 AppendBeginTransaction();
             }
@@ -61,7 +63,7 @@ namespace NeosIT.DB_Migrator.DBMigration.Target
 
                 foreach (string line in content)
                 {
-                    Sw.WriteLine(line);
+                    streamWriter.WriteLine(line);
                 }
 
                 AfterMigrationFile(version, file);
@@ -78,7 +80,7 @@ namespace NeosIT.DB_Migrator.DBMigration.Target
         /// <param name="file"></param>
         public virtual void BeforeMigrationFile(Version version, SqlFileInfo file)
         {
-            Sw.WriteLine("-- db-migrator:FILE: {0}", file.FileInfo.Name);
+            streamWriter.WriteLine("-- db-migrator:FILE: {0}", file.FileInfo.Name);
         }
 
         /// <summary>
@@ -90,7 +92,7 @@ namespace NeosIT.DB_Migrator.DBMigration.Target
         {
             if (file.SqlInsertMigration)
             {
-                Sw.WriteLine("INSERT INTO migrations (major, minor, filename) VALUES('{0}', '{1}', '{2}');",
+                streamWriter.WriteLine("INSERT INTO migrations (major, minor, filename) VALUES('{0}', '{1}', '{2}');",
                              version.Major, version.Minor, file.FileInfo.Name);
             }
         }
@@ -102,7 +104,7 @@ namespace NeosIT.DB_Migrator.DBMigration.Target
         {
             AppendCommitTransaction();
 
-            Sw.Dispose();
+            streamWriter.Dispose();
         }
 
         /// <summary>

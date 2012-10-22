@@ -48,6 +48,7 @@ namespace NeosIT.DB_Migrator.DBMigration.Parsers.MSSQL
                 throw new Exception("You must apply a password for your database username!");
             }
 
+            migrator.Applier.FileEncoding = System.Text.Encoding.GetEncoding(string.IsNullOrEmpty(CurrentOptions.Encoding) ? "ucs-2" : CurrentOptions.Encoding);
 
             return migrator;
         }

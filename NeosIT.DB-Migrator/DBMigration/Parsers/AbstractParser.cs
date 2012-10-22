@@ -64,6 +64,8 @@ namespace NeosIT.DB_Migrator.DBMigration.Parsers
             if (CurrentOptions.Directories.Count > 0)
                 migrator.Directories = CurrentOptions.Directories.Aggregate((x, y) => x + migrator.SeparatorPath + y);
 
+            migrator.Applier.FileEncoding = System.Text.Encoding.GetEncoding(string.IsNullOrEmpty(CurrentOptions.Encoding) ? "utf-8" : CurrentOptions.Encoding);
+
             migrator.OnlySimulate = CurrentOptions.OnlySimulate;
             migrator.KeepTemporaryFile = CurrentOptions.KeepTemporaryFile;
 

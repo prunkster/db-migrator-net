@@ -51,6 +51,9 @@ namespace NeosIT.DB_Migrator.DBMigration.Options
         [ValueList(typeof(List<string>), MaximumElements = 1)]
         public IList<string> Directories { get; set; }
 
+        [Option("e", "encoding", HelpText = "Set file enconding; all allowed values for System.Text.Encoding.GetEncoding: utf-8 (default), utf-16, ucs-2,..")]
+        public virtual string Encoding { get; set; }
+
         [HelpOption]
         public string Help()
         {
