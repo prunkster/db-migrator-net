@@ -201,7 +201,14 @@ namespace NeosIT.DB_Migrator.DBMigration
                 if (sqlDirInfo.LatestOnly)
                 {
                     log.Info("only the latest migration will be applied", "merging");
-                    Version latestVersionInStack = candidates.Keys.Last();
+                    Version latestVersionInStack = candidates.Keys.LastOrDefault();
+
+                    if (null == latestVersionInStack)
+                    {
+                        log.Info("no latest migration to apply", "merging");
+                        return r;
+                    }
+
                     versions.Add(latestVersionInStack, candidates[latestVersionInStack]);
                 }
                 else
